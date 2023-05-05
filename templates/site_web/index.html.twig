@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SiteWeb {% endblock %}
+
+{% block card_title %}<i class="fas fa-list text-sm"></i> Sites web utilisant cette BD  {% endblock %}
+{% block card_tools %}
+    <a href="#" class="btn btn-default btn-xs rounded" data-toggle="modal" data-target="#modalAjout">
+        <i class="fas fa-plus-circle"></i> Ajouter
+    </a>
+{% endblock %}
+{% block body %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>Structure</th>
+                <th>Code</th>
+                <th>Logo</th>
+                <th>Lien</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
+                <th class="text-center" style="width: 120px!important;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for site_web in site_webs %}
+                <tr>
+                    <td>{{ site_web.id }}</td>
+                    <td>{{ site_web.structure }}</td>
+                    <td>{{ site_web.code }}</td>
+                    <td>{{ site_web.logo }}</td>
+                    <td>{{ site_web.lien }}</td>
+                    <td>{{ site_web.createdAt ? site_web.createdAt|date('d/m/Y') : '' }}</td>
+                    <td>{{ site_web.updatedAt ? site_web.updatedAt|date('d/m/Y') : '' }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('site_web_show', {'id': site_web.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-eye text-primary"></i></a>
+                        <a href="{{ path('site_web_edit', {'id': site_web.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ path('site_web_new') }}">
+{#   FENETRES MODALES#}
+    <div class="modal fade" id="modalAjout">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ path('site_web_index') }}" method="post">
+                    <div class="modal-header bg-success">
+                        <h4 class="modal-title card-title"> <i class="fas fa-plus-circle"></i> Nouvel enregistrement</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-default">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+     <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title card-title text-dark"> <i class="fas fa-edit "></i> Mise à jour</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}

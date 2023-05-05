@@ -1,0 +1,27 @@
+{% extends 'baseNotifEmail.html.twig' %}
+{% block body %}
+    <div class="col-lg-12">
+        <h4>
+            Important, alerte automatique
+        </h4>
+        <h4 class="text-muted">
+            Bonjour admin
+        </h4>
+
+        <p>
+            Le site a fait l'objet d'une nouvelle inscription à la newsletter. <br> <br>
+            Nouvelle adresse inscrite : {{ news.email }}
+        </p>
+
+        <p>
+            Cordialement, <br>
+            {{ parametre.libelleStructure }}, <br>
+            Centre émetteur, Conakry, Guinée
+        </p>
+        <small>
+            <i>
+                Ce courriel est un message automatique.
+            </i>
+        </small>
+    </div>
+{% endblock %}

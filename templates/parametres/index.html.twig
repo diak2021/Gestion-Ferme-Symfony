@@ -1,0 +1,622 @@
+{% extends 'base.html.twig' %}
+{% block title %}Parametres{% endblock %}
+{% block card_title %}<i class="fas fa-cogs text-sm"></i> Paramètrage en cours{% endblock %}
+{% block other_links %}
+    <style>
+        @media screen and (min-width: 780px){
+            .mobile{
+                display: none;
+            }
+        }
+        @media screen and (max-width: 780px){
+            .desktop{
+                display: none;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+
+    <div class="">
+        <div class="card card-default card-outline shadow-none border">
+            <div class="card-header">
+                <h4 class="card-title"><i class="fas fa-cog text-sm"></i> Informations de base</h4>
+                <div class="card-tools">
+                    {% if parametre %}
+                        <a href="{{ path('parametres_edit', {'id': parametre.id}) }}" class="btn btn-sm btn-default rounded">
+                            <span class="far fa-edit"></span> Modifier les paramètres
+                        </a>
+                    {% else %}
+                        <a href="{{ path('parametres_new') }}" class="btn btn-sm btn-default rounded">
+                            <span class="far fa-plus-circle"></span> Nouveau
+                        </a>
+                    {% endif %}
+
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>Désignation de la structure</td> <th class="text-muted">{{ parametre.libelleStructure ?? "Non définie" }}</th>
+                                <td rowspan="6" style="width: 30%; padding: 15px; text-align: center" class="desktop">
+
+                                    <div class="text-bold text-muted text-md text-left mb-1 ml-4 text-center mr-sm-4 mb-2">Logo</div>
+                                    <div class="text-center">
+                                        <img src="{{ asset(parametre.logo ?? "") }}" alt="" width="90" class="img-fluid">
+                                    </div>
+
+                                    <div class="text-bold text-muted text-sm text-left mb-1 ml-4 mt-5 mb-2 text-center mr-sm-3">Icône du navigateur</div>
+                                    <div class="text-center">
+                                        <img src="{{ asset(parametre.favicon ??"") }}" alt="" width="40" class="img-fluid text-center">
+                                    </div>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Phrase d'accroche</td> <th class="text-muted">{{ parametre.slogan ?? "Non défini" }}</th>
+                            </tr>
+                            <tr>
+                                <td>N° téléphone Principal</td> <th class="text-muted">{{ parametre.telephone ?? "Non défini" }}</th>
+                            </tr>
+                            <tr>
+                                <td>Adresse Email Principale</td> <th class="text-muted">{{ parametre.email ?? "Non définie"}}</th>
+                            </tr>
+                            <tr>
+                                <td>Plage d'ouverture</td> <th class="text-muted">{{ parametre.plageOuvertureDesLocaux ?? "Non définie"}}</th>
+                            </tr>
+                            <tr>
+                                <td>Couleur principale du site</td> <th class="text-muted">{{ parametre.couleurPrincipale ?? "Non définie"}}</th>
+                            </tr>
+                            <tr class="mobile text-center">
+                                <td>Logo</td> <th class="text-muted"><img src="{{ asset(parametre.logo ?? '') }}" alt="" width="100" class="img-fluid"></th>
+                            </tr>
+                            <tr class="mobile text-center">
+                                <td>Icône du navigateur</td> <th class="text-muted"><img src="{{ asset(parametre.favicon ?? '') }}" alt="" width="50" class="img-fluid"></th>
+                            </tr>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-default card-outline shadow-none border collapsed-card">
+            <div class="card-header">
+                <h4 class="card-title"> <i class="fas fa-users text-sm"></i> Réseaux sociaux</h4>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th class="text-muted">Réseau</th> <th class="text-muted">Lien</th> <th style="width: 20%">Statut</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            <tr>
+                                <td><span class="fab fa-facebook text-sm text-primary"></span> Facebook</td>
+                                <td>{{ parametre.facebook ?? "Non défini" }}</td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('facebook_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="facebook" {{ parametre.isFacebookEnable ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="facebook"> {{ parametre.isFacebookEnable ? 'ON' : 'OFF'}} </label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="fab fa-linkedin text-sm text-blue"></span> Linkdin</td>
+                                <td>{{ parametre.linkdin ?? "Non défini" }}</td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('linkdin_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="linkdin" {{ parametre.isLinkdinEnabled ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="linkdin">{{ parametre.isLinkdinEnabled ? 'ON' : 'OFF'}}</label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td><span class="fab fa-twitter text-sm text-info"></span> Twitter</td>
+                                <td>{{ parametre.twitter ?? "Non défini" }}</td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('twitter_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="twitter" {{ parametre.isTwitterEnabled ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="twitter"> {{ parametre.isTwitterEnabled ? 'ON' : 'OFF'}} </label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> <span class="fab fa-youtube text-sm text-danger"></span> Youtube</td>
+                                <td>{{ parametre.youtube ?? "Non défini" }}</td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('youtube_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="youtube" {{ parametre.isYoutubeEnabled ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="youtube">{{ parametre.isYoutubeEnabled ? 'ON' : 'OFF'}}</label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-default card-outline shadow-none border collapsed-card">
+            <div class="card-header">
+                <h4 class="card-title"> <i class="far fa-envelope-open text-sm"></i> Notifications </h4>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Autorisation</th> <th>Statut</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td> <span class="far fa-comment"></span>  Envoyer un SMS à l'administrateur après chaque nouvelle demande de rendez-vous</td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('sms_admin_rdv_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="sms" {{ parametre.smsToAdminAfterNewRDV ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="sms"> {{ parametre.smsToAdminAfterNewRDV ? 'ON' : 'OFF'}} </label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> <span class="far fa-comment"></span>  Envoyer un SMS au visiteur après sa demande de rendez-vous</td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('sms_client_rdv_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="smsclient" {{ parametre.smsToClientAfterNewRDV ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="smsclient"> {{ parametre.smsToClientAfterNewRDV ? 'ON' : 'OFF'}} </label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> <span class="far fa-envelope"></span> Envoyer un mail à l'administrateur après chaque nouvelle demande de rendez-vous</td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('mail_admin_rdv_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="rdv" {{ parametre.emailToAdminAfterNewRDV ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="rdv"> {{ parametre.emailToAdminAfterNewRDV ? 'ON' : 'OFF'}} </label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> <span class="far fa-envelope"></span> Envoyer un mail au visiteur après sa demande de rendez-vous</td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('mail_client_rdv_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="rdvclient" {{ parametre.emailToClientAfterNewRDV ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="rdvclient"> {{ parametre.emailToClientAfterNewRDV ? 'ON' : 'OFF'}} </label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> <span class="far fa-envelope"></span> Envoyer un mail à l'administrateur après chaque nouveau mail reçu </td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('mail_admin_mailing_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="mailingadmin" {{ parametre.emailToAdminAfterNewMailing ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="mailingadmin"> {{ parametre.emailToAdminAfterNewMailing ? 'ON' : 'OFF'}} </label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> <span class="far fa-envelope"></span> Envoyer un mail au visiteur après son envoi de mail à {{ parametre.libelleStructure}} </td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('mail_visiteur_mailing_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="mailclient" {{ parametre.emailToClientAfterNewMailing ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="mailclient"> {{ parametre.emailToClientAfterNewMailing ? 'ON' : 'OFF'}} </label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> <span class="far fa-envelope"></span> Envoyer un mail à l'administrateur après chaque nouvelle souscription à la newsletter </td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('mail_admin_newsletter_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="newsadmin" {{ parametre.emailToAdminAfterNewAddNewsletter ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="newsadmin"> {{ parametre.emailToAdminAfterNewAddNewsletter ? 'ON' : 'OFF'}} </label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td> <span class="far fa-envelope"></span> Envoyer un mail au visiteur après son inscription à la newsletter </td>
+                                <td  style="width: 20%">
+                                    <form action="{{ path('mail_visiteur_newsletter_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                        <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                        <input type="checkbox" class="custom-control-input input-lg" id="newsclient" {{ parametre.emailToClientAfterNewAddNewsletter ? 'checked' : ''}}>
+                                        <label class="custom-control-label on-off" for="newsclient"> {{ parametre.emailToClientAfterNewAddNewsletter ? 'ON' : 'OFF'}} </label>
+                                    </form>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-default card-outline shadow-none border collapsed-card">
+            <div class="card-header">
+                <h4 class="card-title"> <i class="fas fa-object-group text-sm"></i> Activation de sections du site </h4>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_horaire_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="horaire" {{ parametre.isPlageOuvertureEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="horaire"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher les horaires d'ouverture</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_phone_number_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="num" {{ parametre.isPhoneNumberEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="num"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher le N° Tel principal</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_facebook_icon_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="fb" {{ parametre.isFacebookEnable ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="fb"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher l'icône Facebook</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_linkidin_icon_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="lk" {{ parametre.isLinkdinEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="lk"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher l'icône Linkidin</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_twitter_icon_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="tw" {{ parametre.isTwitterEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="tw"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher l'icône Twitter</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_youtube_icon_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="yt" {{ parametre.isYoutubeEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="yt"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher l'icône Youtube</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_disponibilite_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="dispo" {{ parametre.isSectionDisponibiliteEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="dispo"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Section disponibilité sous le slider</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_service_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="service" {{ parametre.isSectionServiceEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="service"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section service</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_urgence_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="urgence" {{ parametre.isSectionEmergencyEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="urgence"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section urgence</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_apropos_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="apropos" {{ parametre.isSectionAboutEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="apropos"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section A propos</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_stat_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="chiffre" {{ parametre.isSectionChiffreEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="chiffre"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section chiffres</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_salle_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="col" {{ parametre.isSectionCol66Enabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="col"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section salles</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_produit_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="prod" {{ parametre.isSectioncol4ProduitEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="prod"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section produits</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_rendevous_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="rendezvous" {{ parametre.isFormRDVenabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="rendezvous"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher le formulaire de rendez-vous</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_actualite_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="actu" {{ parametre.isSectionActualiteEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="actu"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section actualité</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_temoignage_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="temoin" {{ parametre.isSectionTestimonialEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="temoin"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section témoignage</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_medecin_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="medecin" {{ parametre.isSectionTeamEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="medecin"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section médecin</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_outil_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="outil" {{ parametre.isSectionSlideOutilsEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="outil"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section slide outils</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_prix_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="prix" {{ parametre.isSectionPricingEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="prix"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section pricing</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_FAQ_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="FAQ" {{ parametre.isSectionFAQenabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="FAQ"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section FAQ</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_maps_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="maps" {{ parametre.isSectionMapsEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="maps"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher la section localisation</div>
+                    </div>
+                    
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_form_email_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="form_email" {{ parametre.isSectionQuickEmailEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="form_email"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher le formulaire de mail</div>
+                    </div>
+
+                    <div class="col-sm-4 mt-1">
+                        <div class="d-inline-block">
+                            <form action="{{ path('show_form_newsletter_section_switch_param') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                <input type="hidden" name="paramId" value="{{ parametre.id }}">
+                                <input type="checkbox" class="custom-control-input input-lg" id="form_newsletter" {{ parametre.isSectionNewsLetterEnabled ? 'checked' : ''}}>
+                                <label class="custom-control-label" for="form_newsletter"> </label>
+                            </form>
+                        </div>
+                        <div class="d-inline-block">Afficher le formulaire de newsletter</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block other_scripts %}
+    <script>
+
+        document.querySelectorAll("input[type='checkbox'].custom-control-input").forEach(function (buttom) {
+            buttom.addEventListener('click', submitFormSwitch);
+        })
+
+        function submitFormSwitch() {
+
+            let form = $(this).parent('form');
+            let label = $('label.on-off', form);
+
+            // actualisation du statut
+
+            if ($(this).prop('checked') === true){
+                label.html('ON');
+            }
+            else {
+                label.html('OFF');
+            }
+
+            // envoi du formulaire du bouton
+
+            let action = form.attr('action');
+            let formData = form.serialize()
+
+            $.ajax({
+                url : action,
+                type: "POST",
+                data : formData,
+                success: function(response, textStatus, jqXHR)
+                {
+                    if (response.message === "Option activée avec succès!"){
+                        $(document).Toasts('create', {
+                            class: 'bg-success',
+                            title: "Information",
+                            autohide: true,
+                            delay: 2000,
+                            subtitle: '',
+                            icon: "fas fa-th-list",
+                            position: 'topRight',
+                            body: response.message,
+                        })
+                    }else {
+                        $(document).Toasts('create', {
+                            class: 'bg-warning',
+                            title: "Information",
+                            autohide: true,
+                            delay: 2000,
+                            subtitle: '',
+                            icon: "fas fa-th-list",
+                            position: 'topRight',
+                            body: response.message,
+                        })
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    $(document).Toasts('create', {
+                        class: 'bg-danger',
+                        title: "Information",
+                        autohide: true,
+                        delay: 5000,
+                        subtitle: '',
+                        icon: "fas fa-th-list",
+                        position: 'topRight',
+                        body: errorThrown,
+                    })
+                }
+            });
+        }
+    </script>
+
+{% endblock %}

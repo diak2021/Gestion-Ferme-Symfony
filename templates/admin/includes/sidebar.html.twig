@@ -1,0 +1,195 @@
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-light-warning elevation-4">
+    <!-- Brand Logo -->
+    <a href="#" class="brand-link p-0 m-0 pl-2 pr-1" style="border-bottom: 2px solid #3fbbc0;">
+        <img src="{{asset(app.session.get('parametre').logo ?? "") }}" alt="logo" class=" img-circle p-1"
+             style="width: 60px; height: 60px;">
+        <span class="brand-text text-lg text-dark" style="font-family: 'Times New Roman'; font-size: 22px;"><b>Hospital Sight</b></span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex row">
+            <div class="image text-center col-sm-4 mt-1">
+                <img src="{{ asset(app.user.photo ?? 'images/avatar.png') }}" class="img-circle" alt="Image" style="width: 50px; height: 50px;">
+            </div>
+            <div class="info col-sm-8 text-center text-sm-left">
+                <a href="#" class="d-block text-bold">{{ app.user ?? 'T. Mamoudou' }}</a>
+                <a href="#" class="d-block"><i class="fas text-success fa-circle text-sm"></i> En ligne</a>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2 mb-5">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <li class="nav-item has-treeview">
+                    <a href="{{ path('dashboard') }}" class="nav-link active" style="background: #3fbbc0">
+                        <i class="nav-icon fas fa-tachometer-alt text-light"></i>
+                        <p class="text-white">
+                            Tableau de Bord
+                            <i class=""></i>
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ path('nouveaux_mails') }}" class="nav-link">
+                        <i class="fas fa-envelope nav-icon text-sm"></i>
+                        <p>Nouveaux mails</p>
+                        <span class="right badge badge-danger">{{ app.session.get('newEmails')|length }}</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="{{ path('new_rendez_vous') }}" class="nav-link">
+                        <i class="fas fa-clock nav-icon text-sm"></i>
+                        <p>Nouveaux rendez-vous</p>
+                        <span class="right badge badge-danger">{{ app.session.get('newRdv')|length }}</span>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tree"></i>
+                        <p>
+                            Eléments de base
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a href="{{ path('annee_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Années</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('slide_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Slide</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-box-tissue text-sm"></i>
+                        <p>
+                            Intéractivité
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a href="{{ path('feedback_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Feedback clients</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('newsletter_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Newsletter</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('question_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Questions</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('rendez_vous_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Rendez-vous</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('email_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Emails</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-braille text-sm"></i>
+                        <p>
+                            Publications
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <li class="nav-item">
+                            <a href="{{ path('article_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Articles</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('categorie_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Catégories</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('service_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Service</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('team_member_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Equipes</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ path('image_gallerie_index') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Gallérie</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="{{ path('parametres_index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-cogs text-sm"></i>
+                        <p>
+                            Paramètrage
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="{{ path('user_index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-users-cog text-sm"></i>
+                        <p>
+                            Gestions utilisateurs
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="{{ path('parametres_index') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-edit text-sm"></i>
+                        <p>
+                            Profil
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item has-treeview">
+                    <a href="{{ path('app_logout') }}" class="nav-link" onclick="confirm('Voulez-vous vraiment vous déconnecté ? ')">
+                        <i class="nav-icon fas fa-power-off"></i>
+                        <p class="text-danger">
+                            Déconnexion
+                            <i class=""></i>
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>

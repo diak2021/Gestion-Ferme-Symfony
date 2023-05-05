@@ -1,0 +1,102 @@
+<div class="">
+    {{ form_start(form) }}
+    <div class="card card-default card-outline shadow-none border">
+        <div class="card-header">
+            <h4 class="card-title"><i class="fas fa-cog text-sm"></i> Configuration de base</h4>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6"> {{ form_row(form.siteWeb) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.libelleStructure) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.slogan) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.telephone) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.email) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.plageOuvertureDesLocaux) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.logo) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.favicon) }} </div>
+                <div class="col-sm-12"> {{ form_row(form.couleurPrincipale) }} </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-default card-outline shadow-none border collapsed-card">
+        <div class="card-header">
+            <h4 class="card-title"> <i class="fab fa-facebook-square text-sm"></i> Réseaux sociaux</h4>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6"> {{ form_row(form.facebook) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.twitter) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.linkdin) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.youtube) }} </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-default card-outline shadow-none border collapsed-card">
+        <div class="card-header">
+            <h4 class="card-title"> <i class="far fa-envelope-open text-sm"></i> Notifications </h4>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6"> {{ form_row(form.emailToAdminAfterNewRDV) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.smsToAdminAfterNewRDV) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.emailToClientAfterNewRDV) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.smsToClientAfterNewRDV) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.emailToAdminAfterNewMailing) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.emailToClientAfterNewMailing) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.emailToAdminAfterNewAddNewsletter) }} </div>
+                <div class="col-sm-6"> {{ form_row(form.emailToClientAfterNewAddNewsletter) }} </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card card-default card-outline shadow-none border collapsed-card">
+        <div class="card-header">
+            <h4 class="card-title"> <i class="fas fa-object-group text-sm"></i> Activation de sections du site </h4>
+            <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-plus"></i></button>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-4"> {{ form_row(form.isPlageOuvertureEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isPhoneNumberEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isFacebookEnable) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isLinkdinEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isTwitterEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isYoutubeEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionDisponibiliteEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionServiceEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionEmergencyEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionAboutEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionChiffreEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionCol6_6Enabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectioncol4ProduitEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isFormRDVenabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionActualiteEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionTestimonialEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionTeamEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionSlideOutilsEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionPricingEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionFAQenabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionMapsEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionQuickEmailEnabled) }}</div>
+                <div class="col-sm-4"> {{ form_row(form.isSectionNewsLetterEnabled) }}</div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-sm btn-info float-right">
+        <i class="fas fa-save"></i> Enregistrer
+    </button>
+    {{ form_end(form) }}
+</div>

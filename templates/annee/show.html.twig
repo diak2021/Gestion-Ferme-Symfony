@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annee{% endblock %}
+
+{% block body %}
+    <h1>Annee</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ annee.id }}</td>
+            </tr>
+            <tr>
+                <th>Annee</th>
+                <td>{{ annee.annee }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ annee.code }}</td>
+            </tr>
+            <tr>
+                <th>Detail</th>
+                <td>{{ annee.detail }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ annee.createdAt ? annee.createdAt|date('d/m/Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ annee.updatedAt ? annee.updatedAt|date('d/m/Y') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('annee_index') }}">back to list</a>
+
+    <a href="{{ path('annee_edit', {'id': annee.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+
+    {{ include('annee/_delete_form.html.twig') }}
+{% endblock %}

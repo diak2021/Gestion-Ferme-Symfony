@@ -1,0 +1,4 @@
+NB: I started this poultry farming project directly from my hospital sight projet, although I
+know there too many entities I don't need here, I can all the same adapt it and the non-required 
+entities on background and sections on fontend will stay sleeping unless there is a need of extension
+to those.

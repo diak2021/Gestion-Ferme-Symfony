@@ -1,0 +1,178 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Service {% endblock %}
+
+{% block card_title %}<i class="fas fa-list text-sm"></i> Liste des services de de l'hôpital {% endblock %}
+{% block card_tools %}
+    <a href="#" class="btn btn-default btn-xs rounded" data-toggle="modal" data-target="#modalAjout">
+        <i class="fas fa-plus-circle"></i> Ajouter
+    </a>
+{% endblock %}
+{% block body %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>Service</th>
+                <th>Abrége (Titre) </th>
+                <th>Date Création</th>
+                <th>Statut</th>
+                <th class="text-center" style="width: 120px!important;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for service in services %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ service.service }}</td>
+                    <td>{{ service.abrege }}</td>
+                    <td>{{ service.createdAt ? service.createdAt|date('d/m/Y') : '' }}</td>
+                    <td>
+                        <form action="{{ path('switch_service_statut', {'id':service.id}) }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                            <input type="checkbox" class="custom-control-input input-lg" id="service{{ service.id }}" {{ service.isActif ? 'checked' : ''}}>
+                            <label class="custom-control-label on-off" for="service{{ service.id }}"> {{ service.isActif ? 'ON' : 'OFF'}} </label>
+                        </form>
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ path('service_edit', {'id': service.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+                        <div style="display: inline-block">{{ include('service/_delete_form.html.twig') }}</div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{#   FENETRES MODALES#}
+    <div class="modal fade" id="modalAjout">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ path('service_index') }}" method="post">
+                    <div class="modal-header bg-success">
+                        <h4 class="modal-title card-title"> <i class="fas fa-plus-circle"></i> Nouvel enregistrement</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(form) }}
+                            <div class="row">
+                                <div class="col-sm-12">{{ form_row(form.service) }}</div>
+                                <div class="col-sm-12">{{ form_row(form.abrege) }}</div>
+                                <div class="col-sm-12">{{ form_row(form.icon) }}</div>
+                                <div class="col-sm-12">{{ form_row(form.detail) }}</div>
+                                <div class="col-sm-4">{{ form_row(form.isTitleEnabled) }}</div>
+                                <div class="col-sm-5">{{ form_row(form.isDescriptionEnabled) }}</div>
+                                <div class="col-sm-3">
+                                    <button class="btn btn-sm btn-default float-right"><i class="fas fa-folder"></i> Ok</button>
+                                </div>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title card-title text-dark"> <i class="fas fa-edit "></i> Mise à jour</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}
+
+{% block other_scripts %}
+    <script>
+
+        document.querySelectorAll("input[type='checkbox'].custom-control-input").forEach(function (buttom) {
+            buttom.addEventListener('click', submitFormSwitch);
+        })
+
+        function submitFormSwitch() {
+
+            let form = $(this).parent('form');
+            let label = $('label.on-off', form);
+
+            // actualisation du statut
+
+            if ($(this).prop('checked') === true){
+                label.html('ON');
+            }
+            else {
+                label.html('OFF');
+            }
+
+            // envoi du formulaire du bouton
+
+            let action = form.attr('action');
+            let formData = form.serialize()
+
+            $.ajax({
+                url : action,
+                type: "POST",
+                data : formData,
+                success: function(response, textStatus, jqXHR)
+                {
+                    if (response.message === "Statut activé avec succès!"){
+                        $(document).Toasts('create', {
+                            class: 'bg-success',
+                            title: "Information",
+                            autohide: true,
+                            delay: 2000,
+                            subtitle: '',
+                            icon: "fas fa-th-list",
+                            position: 'topRight',
+                            body: response.message,
+                        })
+                    }else {
+                        $(document).Toasts('create', {
+                            class: 'bg-warning',
+                            title: "Information",
+                            autohide: true,
+                            delay: 2000,
+                            subtitle: '',
+                            icon: "fas fa-th-list",
+                            position: 'topRight',
+                            body: response.message,
+                        })
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    $(document).Toasts('create', {
+                        class: 'bg-danger',
+                        title: "Information",
+                        autohide: true,
+                        delay: 5000,
+                        subtitle: '',
+                        icon: "fas fa-th-list",
+                        position: 'topRight',
+                        body: errorThrown,
+                    })
+                }
+            });
+        }
+    </script>
+
+{% endblock %}

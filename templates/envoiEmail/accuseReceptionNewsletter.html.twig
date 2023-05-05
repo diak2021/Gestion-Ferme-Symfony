@@ -1,0 +1,27 @@
+{% extends 'baseNotifEmail.html.twig' %}
+{% block body %}
+    <div class="col-lg-12">
+        <h4>
+            Réponse automatiqe
+        </h4>
+        <h4 class="text-muted">
+            Bonjour Madame/Monsieur
+        </h4>
+
+        <p>
+            Vous vous êtes inscrit.e à la newsletter avec succès. <br>
+            Nous vous tiendrons informé de toutes nos prochaines annonces et offres de service. Merci !
+        </p>
+
+        <p>
+            Cordialement, <br>
+            {{ parametre.libelleStructure }}, <br>
+            Centre émetteur, Conakry, Guinée
+        </p>
+        <small>
+            <i>
+                Ce courriel est un message automatique.
+            </i>
+        </small>
+    </div>
+{% endblock %}

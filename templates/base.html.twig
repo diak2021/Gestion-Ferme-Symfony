@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    {% include 'admin/includes/head.html.twig' %}<!-- inclusion de l'entete-->
+    <title>{% block title %}Ferme{% endblock %}</title>
+    {% block other_links %}{% endblock %} <!-- Pour des liens additionnels -->
+
+    <style>
+
+        label.required:after {
+            content: " *";
+            color: red;
+        }
+    </style>
+
+</head>
+<body class="hold-transition layout-top-nav text-sm">
+<div class="wrapper">
+    {% include 'admin/includes/navebar.html.twig' %}<!-- inclusion du navbar-->
+{#    {% include 'admin/includes/sidebar.html.twig' %}<!-- inclusion du sidebar-->#}
+    <div class="content-wrapper">
+        <div class="content-header">
+            {% include 'admin/includes/content_header.html.twig' %}<!-- inclusion du content header-->
+        </div>
+        <div class="content">
+            <div class="container">
+                <div class="fcard fcard-danger fcard-outline fshadow-none felevation-0">
+                    <div class="fcard-header">
+                        <h4 class="card-title">{% block card_title %}{% endblock %}</h4>
+                        <div class="card-tools pr-sm-1">{% block card_tools %}{% endblock %}</div>
+                    </div>
+                    <div class="fcard-body">
+                        <!-- Place reservee au contenu-->
+                        {% block body %}{% endblock %}
+                        <!-- Place reservee au contenu-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% include 'admin/includes/footer.html.twig' %}<!-- inclusion du footer-->
+</div>
+{% include 'admin/includes/script.html.twig' %}<!-- inclusion des scripts-->
+
+{#messages flash#}
+{% for message in app.flashes('success') %}
+    <span id="messageContent" class="dis-none">{{ message }}</span>
+    <script>
+        $(document).Toasts('create', {
+            class: 'bg-success',
+            title: "Information",
+            autohide: true,
+            delay: 7000,
+            subtitle: '',
+            icon: "fas fa-th-list",
+            position: 'topRight',
+            body: $('#messageContent').text(),
+        })
+    </script>
+{% endfor %}
+{% for message in app.flashes('warning') %}
+    <span id="messageContent" class="dis-none">{{ message }}</span>
+    <script>
+        $(document).Toasts('create', {
+            class: 'bg-warning',
+            title: "Information",
+            autohide: true,
+            delay: 7000,
+            subtitle: '',
+            icon: 'fas fa-th-list',
+            position: 'topRight',
+            body: $('#messageContent').text(),
+        })
+    </script>
+{% endfor %}
+{% for message in app.flashes('danger') %}
+    <span id="messageContent" class="dis-none">{{ message }}</span>
+    <script>
+        $(document).Toasts('create', {
+            class: 'bg-danger',
+            title: "Information",
+            autohide: true,
+            delay: 7000,
+            subtitle: '',
+            icon: 'fas fa-th-list',
+            position: 'topRight',
+            body: $('#messageContent').text(),
+        })
+    </script>
+{% endfor %}
+{# fin messages flash#}
+{% block other_scripts %}{% endblock %} <!-- Pour du script additionnel-->
+</body>
+</html>

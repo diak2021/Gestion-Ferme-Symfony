@@ -1,0 +1,40 @@
+{% extends 'baseNotifEmail.html.twig' %}
+{% block body %}
+    <div class="col-lg-12">
+        <h4>
+            Réponse automatiqe
+        </h4>
+        <h4 class="text-muted">
+            Bonjour {{ rendezVous.nom }}
+        </h4>
+
+        <p>
+            Nous accusons reception de votre demande de rendez-vous prevu comme suit : <br> <br>
+            Programme: le <span class="text-bold" style="font-weight: bold">{{ rendezVous.dateRendezVous|date('d/m/Y') }} à {{ rendezVous.heureRendezVous|date('h:i') }}</span><br>
+
+            {% if rendezVous.consultant %}
+                Médecin sollicité : {{ rendezVous.consultant }} <br>
+            {% endif %}
+
+            {% if rendezVous.service %}
+                Service : {{ rendezVous.service }} <br>
+            {% endif %}
+
+        </p>
+
+        <p>
+            Nous vous reviendrons dans les plus brefs délais pour une confirmation dudit rendez-vous. <br>
+        </p>
+
+        <p>
+            Cordialement, <br>
+            {{ parametre.libelleStructure }}, <br>
+            Centre émetteur, Conakry, Guinée
+        </p>
+        <small>
+            <i>
+                Ce courriel est un message automatique.
+            </i>
+        </small>
+    </div>
+{% endblock %}

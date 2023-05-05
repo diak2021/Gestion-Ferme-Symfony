@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+{% block title %} Rendez-vous reply{% endblock %}
+
+{% block other_links %}
+    <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
+    <style>
+        .note-editing-area{
+            min-height: 230px;
+        }
+    </style>
+{% endblock %}
+
+{% block card_title %}
+    <i class="fas fa-envelope-open-text"> Répondre aux rendez-vous</i>
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="col-md-12" id="block-read">
+        <div class="card card-default card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Lecture du rendez-vous</h3>
+
+                <div class="card-tools">
+                    <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Previous"><i class="fas fa-chevron-left"></i></a>
+                    <a href="#" class="btn btn-tool" data-toggle="tooltip" title="Next"><i class="fas fa-chevron-right"></i></a>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <div class="mailbox-read-info">
+                    <h6>Date: {{ rdv.dateRendezVous|date('d/m/Y') }}</h6>
+                    <h6>Heure: {{ rdv.heureRendezVous|date('H:i') }}</h6>
+
+                    {% if rdv.nom %}
+                        <h6>Nom: {{ rdv.nom }}</h6>
+                    {% endif %}
+
+                    {% if rdv.service %}
+                        <h6>Service : {{ rdv.service }}</h6>
+                    {% endif %}
+
+                    {% if rdv.consultant %}
+                        <h6>Consultant: {{ rdv.consultant }}</h6>
+                    {% endif %}
+
+                    <h6>De: {{ rdv.email }}
+                        <span class="mailbox-read-time float-right">{{ rdv.createdAt|date('d/m/Y, H:i') }}</span>
+                    </h6>
+                </div>
+
+                <div class="mailbox-read-message">
+                    <p> {{ rdv.detail }} </p>
+                </div>
+                <!-- /.mailbox-read-message -->
+            </div>
+            <!-- /.card-body -->
+
+            <!-- /.card-footer -->
+            <div class="card-footer">
+                <div class="float-right">
+                    <button type="button" class="btn btn-default" id="reply"><i class="fas fa-reply"></i> Répondre</button>
+                    <button type="button" class="btn btn-default"><i class="fas fa-share"></i> Transférer</button>
+                </div>
+                <button type="button" class="btn btn-default"><i class="far fa-trash-alt"></i> Supprimer</button>
+                <button type="button" class="btn btn-default"><i class="fas fa-print"></i> Imprimer</button>
+            </div>
+            <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+    </div>
+
+
+
+
+
+    {#    BLOCK REPONSE AU MAIL#}
+    <div class="col-md-12" id="block-form" style="display: none">
+        <div class="card card-default card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Composition du mail</h3>
+            </div>
+            <!-- /.card-header -->
+            <form action="{{ path('rdv_reply', {'id': rdv.id}) }}" method="post">
+                <div class="card-body">
+                    <div class="form-group">
+                        <input class="form-control" placeholder="To:" name="destinataire" value="A: {{ rdv.email }}" disabled>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" placeholder="objet:" name="objet">
+                    </div>
+                    <div class="form-group">
+                    <textarea id="compose-textarea" class="form-control" style="height: 800px" name="corps" required>
+                    </textarea>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                    <div class="float-right">
+                        <a class="btn btn-default submit"><i class="far fa-times"></i> Annuler</a>
+                        <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Envoyer</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        <!-- /.card -->
+    </div>
+
+{% endblock %}
+
+{% block other_scripts %}
+    <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <script>
+        $(function () {
+            //Add text editor
+            $('#compose-textarea').summernote()
+        })
+
+        $('#reply').click(function () {
+            $('#block-read').hide();
+            $('#block-form').show();
+        })
+
+        $('.submit').click(function () {
+            $('#block-form').hide();
+            $('#block-read').show();
+        })
+    </script>
+{% endblock %}
+
+
+

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+    <title>Ferme avicole</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+
+    <!-- Favicons -->
+    <link href="{{ asset(parametre.favicon ?? "") }}" rel="icon">
+    <link href="{{ asset(parametre.favicon ?? "") }}" rel="apple-touch-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Roboto:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="{{ asset('frontend/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/vendor/animate.css/animate.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/vendor/aos/aos.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: Medicio - v4.7.0
+    * Template URL: https://bootstrapmade.com/medicio-free-bootstrap-theme/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+</head>
+
+<body>
+
+<!-- ======= Top Bar ======= -->
+<div id="topbar" class="d-flex align-items-center fixed-top">
+    <div class="container d-flex align-items-center justify-content-center justify-content-md-between">
+        <div class="align-items-center d-none d-md-flex">
+            {% if parametre.isPlageOuvertureEnabled %}
+                <i class="bi bi-clock"></i> {{ parametre.plageOuvertureDesLocaux }}
+            {% endif %}
+        </div>
+        <div class="d-flex align-items-center">
+            {% if parametre.isFacebookEnable %}
+                <a href="{{ parametre.facebook }}">
+                    <i class="bi bi-facebook text-light"></i>
+                </a>
+            {% endif %}
+            {% if parametre.isLinkdinEnabled %}
+                <a href="{{ parametre.linkdin }}">
+                    <i class="bi bi-linkedin text-light"></i>
+                </a>
+            {% endif %}
+            {% if parametre.isTwitterEnabled %}
+                <a href="{{ parametre.twitter }}">
+                    <i class="bi bi-twitter text-light"></i>
+                </a>
+            {% endif %}
+            {% if parametre.isYoutubeEnabled %}
+                <a href="{{ parametre.youtube }}">
+                    <i class="bi bi-youtube text-light"></i>
+                </a>
+            {% endif %}
+            {% if parametre.isPhoneNumberEnabled %}
+                {{ parametre.telephone }}
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- ======= Header ======= -->
+<header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center">
+
+        <a href="" class="logo me-auto">
+            <img src="{{ asset(parametre.logo ?? "") }}" alt="Logo {{ parametre.libelleStructure }}" class="img-fluid">
+            <span class="text-dark" style="font-family: 'Roboto', sans-serif;">{{ parametre.libelleStructure }}</span>
+        </a>
+        <!-- Uncomment below if you prefer to use an image logo -->
+        <!-- <h1 class="logo me-auto"><a href="index.html">Medicio</a></h1> -->
+
+        <nav id="navbar" class="navbar order-last order-lg-0">
+            <ul>
+                <li><a class="nav-link scrollto " href="{{ path('app_login') }}"> <span class="fas fa-user" style="margin-right: 5px"></span> Connexion </a></li>
+{#                <li><a class="nav-link scrollto" href="#departments">Actualité</a></li>#}
+{#                <li><a class="nav-link scrollto" href="#services">Services</a></li>#}
+{#                <li><a class="nav-link scrollto" href="#doctors">Médecins</a></li>#}
+{#                <li><a class="nav-link scrollto" href="#about">A propos</a></li>#}
+{#                <li class="dropdown"><a href="#"><span>Connexion</span> <i class="bi bi-chevron-down"></i></a>#}
+{#                    <ul>#}
+{#                        <li><a href="{{ path('app_login') }}">Se connecter</a></li>#}
+{#                        <li><a href="{{ path('app_login') }}">Créer un compte</a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>#}
+            </ul>
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav><!-- .navbar -->
+
+{#        <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Nouveau</span> Rendez-vous</a>#}
+
+    </div>
+</header><!-- End Header -->
+
+<!-- ======= Hero Section ======= -->
+<section id="hero">
+    <div id="heroCarousel" data-bs-interval="5000" class="carousel slide carousel-fade" data-bs-ride="carousel">
+
+        <ol class="carousel-indicators" id="hero-carousel-indicators"></ol>
+
+        <div class="carousel-inner" role="listbox">
+
+            {% for slide in slides %}
+                <div class="carousel-item {{ loop.index == 1 ? 'active' : '' }}" style="background-image: url({{ asset(slide.photo  ?? "") }}">
+                    {% if slide.isDescriptionEnabled %}
+                        <div class="container text-danger" >
+                            {% if slide.isTitleEnable %}
+                                <h2 class="text-dark">{{ slide.titre }}</h2>
+                            {% endif %}
+                            {% if slide.isTexteDetailEnabled %}
+                                <p class="text-dark">{{ slide.detail }}</p>
+                            {% endif %}
+                            {% if slide.isBoutonVoirPlusEnabled %}
+                                <a href="#about" class="btn-get-started scrollto">Voir plus</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+        </a>
+
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+            <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+        </a>
+
+    </div>
+</section><!-- End Hero -->
+
+<main id="main">
+
+    <!-- ======= Featured Services Section ======= -->
+    {% if parametre.isSectionDisponibiliteEnabled %}
+        <section id="featured-services" class="featured-services">
+            <div class="container" data-aos="fade-up">
+
+                <div class="row">
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                        <div class="icon-box" data-aos="fade-up" data-aos-delay="100">
+                            <div class="icon"> <i class="fas fa-signal"></i> </div>
+                            <h4 class="title"><a href="">Un CA croissant</a></h4>
+                            <p class="description">Nos équipes dynamiques assurent la croissance de notre chiffre d'affaire</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                        <div class="icon-box" data-aos="fade-up" data-aos-delay="200">
+                            <div class="icon"><i class="fas fa-users"></i></div>
+                            <h4 class="title"><a href="">37 Clients fidèles</a></h4>
+                            <p class="description">Depuis le lancement de cette ferme nous avons pu fidéliser nos clients</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                        <div class="icon-box" data-aos="fade-up" data-aos-delay="300">
+                            <div class="icon"><i class="fas fa-hands-helping"></i></div>
+                            <h4 class="title"><a href="">Des partenariats solides</a></h4>
+                            <p class="description">Pour nous, notre engagement envers nos partenaires est sans revers</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 d-flex align-items-stretch mb-5 mb-lg-0">
+                        <div class="icon-box" data-aos="fade-up" data-aos-delay="400">
+                            <div class="icon"><i class="fas fa-shipping-fast"></i></div>
+                            <h4 class="title"><a href="">La livraison assurée</a></h4>
+                            <p class="description">Nous assurons pleinement la livraison de nos produits sur toute commande</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section><!-- End Featured Services Section -->
+    {% endif %}
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <div class="container">
+        <div class="copyright">
+            &copy; Copyright <strong><a>Mamoudou Traoré</a></strong>, développeur full stack. Tous droits reservés
+        </div>
+        <div class="credits">
+            {#        Réalisé par <a href="#">MT</a>#}
+        </div>
+    </div>
+</footer><!-- End Footer -->
+
+<div id="preloader"></div>
+<a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Vendor JS Files -->
+<script src="{{ asset('frontend/vendor/purecounter/purecounter.js') }}"></script>
+<script src="{{ asset('frontend/vendor/aos/aos.js') }}"></script>
+<script src="{{ asset('frontend/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('frontend/vendor/glightbox/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('frontend/vendor/swiper/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('frontend/vendor/php-email-form/validate.js') }}"></script>
+<script src="{{asset('plugins/jquery/jquery.min.js') }}"></script>
+
+<!-- Template Main JS File -->
+<script src="{{ asset('frontend/js/main.js') }}"></script>
+
+</body>
+</html>

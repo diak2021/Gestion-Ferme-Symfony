@@ -1,0 +1,16 @@
+<form action="{{ path('article_edit', {'id': article.id}) }}" method="post" enctype="multipart/form-data">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-sm-6">{{ form_row(form.titre) }}</div>
+        <div class="col-sm-6">{{ form_row(form.textAppercu) }}</div>
+        <div class="col-sm-6">{{ form_row(form.dateExpiration) }}</div>
+        <div class="col-sm-6">{{ form_row(form.photo) }}</div>
+        <div class="col-sm-6">{{ form_row(form.textIntroductif) }}</div>
+        <div class="col-sm-6">{{ form_row(form.detail) }}</div>
+        <div class="col-sm-6 icheck-success">{{ form_row(form.isPrincipal) }}</div>
+    </div>
+    <button type="submit" class="btn btn-sm btn-default float-right">
+        <i class="fas fa-save"></i> Appliquer
+    </button>
+    {{ form_end(form) }}
+</form>

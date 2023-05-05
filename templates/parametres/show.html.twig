@@ -1,0 +1,138 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parametres{% endblock %}
+
+{% block body %}
+    <h1>Parametres</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ parametre.id }}</td>
+            </tr>
+            <tr>
+                <th>Logo</th>
+                <td>{{ parametre.logo }}</td>
+            </tr>
+            <tr>
+                <th>LibelleStructure</th>
+                <td>{{ parametre.libelleStructure }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ parametre.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ parametre.email }}</td>
+            </tr>
+            <tr>
+                <th>Facebook</th>
+                <td>{{ parametre.facebook }}</td>
+            </tr>
+            <tr>
+                <th>Twitter</th>
+                <td>{{ parametre.twitter }}</td>
+            </tr>
+            <tr>
+                <th>Linkdin</th>
+                <td>{{ parametre.linkdin }}</td>
+            </tr>
+            <tr>
+                <th>Youtube</th>
+                <td>{{ parametre.youtube }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionServiceEnabled</th>
+                <td>{{ parametre.isSectionServiceEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionEmergencyEnabled</th>
+                <td>{{ parametre.isSectionEmergencyEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionAboutEnabled</th>
+                <td>{{ parametre.isSectionAboutEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionChiffreEnabled</th>
+                <td>{{ parametre.isSectionChiffreEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionCol6_6Enabled</th>
+                <td>{{ parametre.isSectionCol66Enabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectioncol4ProduitEnabled</th>
+                <td>{{ parametre.isSectioncol4ProduitEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsFormRDVenabled</th>
+                <td>{{ parametre.isFormRDVenabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionActualiteEnabled</th>
+                <td>{{ parametre.isSectionActualiteEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionTestimonialEnabled</th>
+                <td>{{ parametre.isSectionTestimonialEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionTeamEnabled</th>
+                <td>{{ parametre.isSectionTeamEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionSlideOutilsEnabled</th>
+                <td>{{ parametre.isSectionSlideOutilsEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionPricingEnabled</th>
+                <td>{{ parametre.isSectionPricingEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionFAQenabled</th>
+                <td>{{ parametre.isSectionFAQenabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionMapsEnabled</th>
+                <td>{{ parametre.isSectionMapsEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsSectionQuickEmailEnabled</th>
+                <td>{{ parametre.isSectionQuickEmailEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsFacebookEnable</th>
+                <td>{{ parametre.isFacebookEnable ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsTwitterEnabled</th>
+                <td>{{ parametre.isTwitterEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsLinkdinEnabled</th>
+                <td>{{ parametre.isLinkdinEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IsYoutubeEnabled</th>
+                <td>{{ parametre.isYoutubeEnabled ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CouleurPrincipale</th>
+                <td>{{ parametre.couleurPrincipale }}</td>
+            </tr>
+            <tr>
+                <th>PlageOuvertureDesLocaux</th>
+                <td>{{ parametre.plageOuvertureDesLocaux }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('parametres_index') }}">back to list</a>
+
+    <a href="{{ path('parametres_edit', {'id': parametre.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+
+    {{ include('parametres/_delete_form.html.twig') }}
+{% endblock %}

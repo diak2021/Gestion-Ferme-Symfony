@@ -1,0 +1,15 @@
+<form action="{{ path('annee_edit', {'id': annee.id}) }}" method="post">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-sm-6">{{ form_row(form.annee) }}</div>
+        <div class="col-sm-6">{{ form_row(form.code) }}</div>
+        <div class="col-sm-12">{{ form_row(form.detail) }}</div>
+        <div class="col-sm-6">{{ form_row(form.isEnCours) }}</div>
+        <div class="col-sm-12">
+            <button type="submit" class="btn btn-sm btn-default float-right">
+                <i class="fas fa-save"></i> Enregistrer
+            </button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</form>

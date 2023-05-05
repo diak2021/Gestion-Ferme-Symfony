@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('parametres_delete', {'id': parametre.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cet enregistrement ?');" class="form-inline">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ parametre.id) }}">
+    <button class="btn btn-xs btn-default rounded"><i class="fas fa-trash text-danger"></i></button>
+</form>

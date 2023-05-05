@@ -1,0 +1,20 @@
+<form action="{{ path('team_member_edit', {'id': team_member.id}) }}" method="post" enctype="multipart/form-data">
+    {{ form_start(form) }}
+    <div class="row">
+        <div class="col-sm-6">{{ form_row(form.nom) }}</div>
+        <div class="col-sm-6">{{ form_row(form.prenom) }}</div>
+        <div class="col-sm-6">{{ form_row(form.profession) }}</div>
+        <div class="col-sm-6">{{ form_row(form.fonction) }}</div>
+        <div class="col-sm-3">{{ form_row(form.photo) }}</div>
+        <div class="col-sm-4">{{ form_row(form.telephone) }}</div>
+        <div class="col-sm-5">{{ form_row(form.adresse) }}</div>
+        <div class="col-sm-6">{{ form_row(form.facebook) }}</div>
+        <div class="col-sm-6">{{ form_row(form.linkdin) }}</div>
+        <div class="col-sm-6">{{ form_row(form.twitter) }}</div>
+        <div class="col-sm-6">{{ form_row(form.instagram) }}</div>
+    </div>
+    <button type="submit" class="btn btn-sm btn-default float-right mb-2">
+        <i class="fas fa-save"></i> Appliquer
+    </button>
+    {{ form_end(form) }}
+</form>

@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reponse {% endblock %}
+
+{% block body %}
+
+   <div>
+       <table class="table table-bordered table-striped">
+           <thead>
+           <tr>
+               <th>N°</th>
+               <th>Titre</th>
+               <th>Detail</th>
+               <th>Photo</th>
+               <th>IsActif</th>
+               <th>CreatedAt</th>
+               <th>UpdatedAt</th>
+               <th class="text-center" style="width: 120px!important;">Actions</th>
+           </tr>
+           </thead>
+           <tbody>
+           {% for reponse in reponses %}
+               <tr>
+                   <td>{{ reponse.id }}</td>
+                   <td>{{ reponse.titre }}</td>
+                   <td>{{ reponse.detail }}</td>
+                   <td>{{ reponse.photo }}</td>
+                   <td>{{ reponse.isActif ? 'Yes' : 'No' }}</td>
+                   <td>{{ reponse.createdAt ? reponse.createdAt|date('d/m/Y') : '' }}</td>
+                   <td>{{ reponse.updatedAt ? reponse.updatedAt|date('d/m/Y') : '' }}</td>
+                   <td class="text-center">
+                       <a href="{{ path('reponse_show', {'id': reponse.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-eye text-primary"></i></a>
+                       <a href="{{ path('reponse_edit', {'id': reponse.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+                   </td>
+               </tr>
+           {% else %}
+               <tr>
+                   <td colspan="8">Aucun enregistrement trouvé</td>
+               </tr>
+           {% endfor %}
+           </tbody>
+       </table>
+   </div>
+
+    <a href="{{ path('reponse_new') }}">
+{#   FENETRES MODALES#}
+    <div class="modal fade" id="modalAjout">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ path(' ') }}" method="post">
+                    <div class="modal-header bg-success">
+                        <h4 class="modal-title card-title"> <i class="fas fa-plus-circle"></i> Nouvel enregistrement</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-default">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+     <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title card-title text-dark"> <i class="fas fa-edit "></i> Mise à jour</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}

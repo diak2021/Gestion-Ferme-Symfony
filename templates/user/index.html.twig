@@ -1,0 +1,228 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User {% endblock %}
+
+{% block card_tools %}
+    <a href="#" class="btn btn-default btn-xs rounded" data-toggle="modal" data-target="#modalAjout">
+        <i class="fas fa-plus-circle"></i> Ajouter
+    </a>
+{% endblock %}
+
+{% block body %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped projects">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>Statut</th>
+                <th>Photo</th>
+                <th>Username</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Sexe</th>
+                <th>Naissance</th>
+                <th>Type</th>
+                <th>Pseudo</th>
+                <th>Profession</th>
+                <th>Fonction</th>
+                <th>Service</th>
+                <th>Crée le</th>
+                <th>Roles</th>
+                <th>Dernière connexion</th>
+                <th class="text-center" style="width: 120px!important;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>
+                        <form action="{{ path('user_switch_status', {'id' : user.id}) }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                            <input type="checkbox" class="custom-control-input input-lg" id="article{{ user.id }}" {{ user.isActif ? 'checked' : ''}}>
+                            <label class="custom-control-label on-off" for="article{{ user.id }}">{{ user.isActif ? 'ON' : 'OFF'}}</label>
+                        </form>
+                    </td>
+                    <td>
+                        <img alt="Avatar" class="table-avatar" src="{{ asset(user.photo ?? 'images/avatar.png') }}">
+                    </td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.nom }}</td>
+                    <td>{{ user.prenom }}</td>
+                    <td>{{ user.sexe }}</td>
+                    <td>{{ user.dateNaissance ? user.dateNaissance|date('d/m/Y') : '' }}</td>
+                    <td>{{ user.type }}</td>
+                    <td>{{ user.pseudo }}</td>
+                    <td>{{ user.profession }}</td>
+                    <td>{{ user.fonction }}</td>
+                    <td>{{ user.service }}</td>
+                    <td>{{ user.createdAt ? user.createdAt|date('d/m/Y') : '' }}</td>
+                    <td>
+                        {% for role in user.roles %}
+                            {{ role|join}}
+                        {% endfor %}
+                    </td>
+                    <td>{{ user.dateDerniereConnexion ? user.dateDerniereConnexion|date('d/m/Y à H:i') : '' }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('user_reset_password', {'id': user.id}) }}" class="fas btn btn-xs btn-default rounded" title="réinitialiser MDP">
+                            <i class="fas fa-user-edit text-primary"></i>
+                        </a>
+                        <a href="{{ path('user_edit', {'id': user.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition">
+                            <i class="fas fa-edit text-warning"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="19">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+{#   FENETRES MODALES#}
+    <div class="modal fade" id="modalAjout">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form action="{{ path('user_index') }}" method="post">
+                    <div class="modal-header bg-success">
+                        <h4 class="modal-title card-title"> <i class="fas fa-plus-circle"></i> Nouvel enregistrement</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(form) }}
+                        <div class="row">
+                            <div class="col-sm-6">{{ form_row(form.email) }}</div>
+                            <div class="col-sm-6">{{ form_row(form.pseudo) }}</div>
+                            <div class="col-sm-6">{{ form_row(form.nom) }}</div>
+                            <div class="col-sm-6">{{ form_row(form.prenom) }}</div>
+                            <div class="col-sm-3">{{ form_row(form.dateNaissance) }}</div>
+                            <div class="col-sm-3">{{ form_row(form.sexe) }}</div>
+                            <div class="col-sm-6">{{ form_row(form.profession) }}</div>
+                            <div class="col-sm-6">{{ form_row(form.fonction) }}</div>
+                            <div class="col-sm-6">{{ form_row(form.service) }}</div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label>Roles</label>
+                                    <div class="select2-purple">
+                                        <select class="select2" multiple="multiple" data-placeholder="Choisir les roles" data-dropdown-css-class="select2-purple" style="width: 100%;" name="roles[]">
+                                            <option value="ROLE_ADMIN">Administrateur</option>
+                                            <option value="ROLE_VISITEUR">Visiteur</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-3">{{ form_row(form.type) }}</div>
+                            <div class="col-sm-3">{{ form_row(form.photo) }}</div>
+
+                        </div>
+                        <button type="submit" class="btn btn-sm btn-default float-right mb-2">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                        {{ form_end(form) }}
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+     <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title card-title text-dark"> <i class="fas fa-edit "></i> Mise à jour</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}
+
+{% block other_scripts %}
+    <script>
+
+        document.querySelectorAll("input[type='checkbox'].custom-control-input").forEach(function (buttom) {
+            buttom.addEventListener('click', submitFormSwitch);
+        })
+
+        function submitFormSwitch() {
+
+            let form = $(this).parent('form');
+            let label = $('label.on-off', form);
+
+            // actualisation du statut
+
+            if ($(this).prop('checked') === true){
+                label.html('ON');
+            }
+            else {
+                label.html('OFF');
+            }
+
+            // envoi du formulaire du bouton
+
+            let action = form.attr('action');
+            let formData = form.serialize()
+
+            $.ajax({
+                url : action,
+                type: "POST",
+                data : formData,
+                success: function(response, textStatus, jqXHR)
+                {
+                    if (response.message === "Statut activé avec succès!"){
+                        $(document).Toasts('create', {
+                            class: 'bg-success',
+                            title: "Information",
+                            autohide: true,
+                            delay: 2000,
+                            subtitle: '',
+                            icon: "fas fa-th-list",
+                            position: 'topRight',
+                            body: response.message,
+                        })
+                    }else {
+                        $(document).Toasts('create', {
+                            class: 'bg-warning',
+                            title: "Information",
+                            autohide: true,
+                            delay: 2000,
+                            subtitle: '',
+                            icon: "fas fa-th-list",
+                            position: 'topRight',
+                            body: response.message,
+                        })
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    $(document).Toasts('create', {
+                        class: 'bg-danger',
+                        title: "Information",
+                        autohide: true,
+                        delay: 5000,
+                        subtitle: '',
+                        icon: "fas fa-th-list",
+                        position: 'topRight',
+                        body: errorThrown,
+                    })
+                }
+            });
+        }
+
+    </script>
+
+{% endblock %}

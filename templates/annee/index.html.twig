@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+{% block title %}Annees{% endblock %}
+{% block card_title %}<i class="fas fa-list text-sm"></i> Liste des années {% endblock %}
+{% block card_tools %}
+    <a href="#" class="btn btn-default btn-xs rounded" data-toggle="modal" data-target="#modalAjout">
+        <i class="fas fa-plus-circle"></i> Ajouter
+    </a>
+{% endblock %}
+{% block body %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th style="width: 30px!important;">N°</th>
+                <th>Annee</th>
+                <th>Code</th>
+                <th>Detail</th>
+                <th class="text-center" style="width: 120px!important;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for annee in annees %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ annee.annee }} {% if annee.isEnCours %} <span class="fas fa-star text-warning text-xs ml-2"></span> {% endif %} </td>
+                    <td>{{ annee.code }}</td>
+                    <td>{{ annee.detail }}</td>
+                    <td class="text-center">
+                        {#                    <a href="{{ path('annee_show', {'id': annee.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-eye text-primary"></i></a>#}
+                        <a href="{{ path('annee_edit', {'id': annee.id}) }}" class="fas btn btn-xs btn-default rounded edition" data-toggle="modal" data-target="#modal-edit">
+                            <i class="fas fa-edit text-warning"></i>
+                        </a>
+                        <div style="display: inline-block">
+                            {{ include('annee/_delete_form.html.twig') }}
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{#   FENETRES MODALES#}
+    <div class="modal fade" id="modalAjout">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ path('annee_index') }}" method="post">
+                   {{ form_start(form) }}
+                    <div class="modal-header bg-success">
+                        <h4 class="modal-title card-title"> <i class="fas fa-plus-circle"></i> Nouvel enregistrement</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-6">{{ form_row(form.annee) }}</div>
+                            <div class="col-sm-6">{{ form_row(form.code) }}</div>
+                            <div class="col-sm-12">{{ form_row(form.detail) }}</div>
+                            <div class="col-sm-6">{{ form_row(form.isEnCours) }}</div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-sm btn-default float-right">
+                                    <i class="fas fa-save"></i> Enregistrer
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                   {{ form_end(form) }}
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title card-title text-dark"> <i class="fas fa-edit"></i> Mise à jour</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}
