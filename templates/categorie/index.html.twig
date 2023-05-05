@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categorie {% endblock %}
+
+{% block body %}
+    <div class="card card-outline card-danger">
+        <div class="card-header">
+            <h3 class="card-title"> <i class="far fa-object-ungroup"></i> Différentes catégories de la ferme</h3>
+            <div class="card-tools">
+                <a href="" class="btn btn-xs btn-default mr-2" data-toggle="modal" data-target="#modalAjout">
+                    <i class="fas fa-plus"></i> Ajouter
+                </a>
+                <a href="" class="btn btn-xs btn-default mr-2"> <i class="fas fa-print"></i> imprimer </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Catégorie</th>
+                        <th>Prix Unitaire de base</th>
+                        <th class="text-center" style="width: 120px!important;">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for categorie in categories %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ categorie.categorie }}</td>
+                            <td>{{ categorie.prixUnitaireParDefaut | number_format(0, ' ', ' ') }} GNF</td>
+                            <td class="text-center">
+                                <a href="{{ path('categorie_edit', {'id': categorie.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition">
+                                    <i class="fas fa-edit text-warning"></i>
+                                </a>
+                                <div style="display: inline-block">
+                                    {{ include('categorie/_delete_form.html.twig') }}
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center">Aucun enregistrement trouvé</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{#   FENETRES MODALES#}
+    <div class="modal fade" id="modalAjout">
+        <div class="modal-dialog">
+            <div class="modal-content mb-2">
+                <form action="{{ path('categorie_index') }}" method="post">
+                    <div class="modal-header bg-success">
+                        <h4 class="modal-title card-title"> <i class="fas fa-plus-circle"></i> Nouvelle Catégorie</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(form) }}
+                        {{ form_widget(form) }}
+                        <button type="submit" class="btn btn-sm btn-default float-right mb-2">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                        {{ form_end(form) }}
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+     <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title card-title text-dark"> <i class="fas fa-edit "></i> Mise à jour</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}

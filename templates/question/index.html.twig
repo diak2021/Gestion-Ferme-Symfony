@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Question {% endblock %}
+
+{% block card_title %}<i class="fas fa-list text-sm"></i> Questions fréquemment posées {% endblock %}
+{% block card_tools %}
+
+{% endblock %}
+{% block body %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>Titre</th>
+                <th>Detail</th>
+{#                <th>Photo</th>#}
+                <th>Crée le</th>
+{#                <th>UpdatedAt</th>#}
+{#                <th>IsActif</th>#}
+                <th class="text-center" style="width: 120px!important;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for question in questions %}
+                <tr>
+                    <td>{{ question.id }}</td>
+                    <td>{{ question.titre }}</td>
+                    <td>{{ question.detail }}</td>
+{#                    <td>{{ question.photo }}</td>#}
+                    <td>{{ question.createdAt ? question.createdAt|date('d/m/Y') : '' }}</td>
+{#                    <td>{{ question.updatedAt ? question.updatedAt|date('d/m/Y') : '' }}</td>#}
+{#                    <td>{{ question.isActif ? 'Yes' : 'No' }}</td>#}
+                    <td class="text-center">
+                        <a href="{{ path('question_show', {'id': question.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-eye text-primary"></i></a>
+                        <a href="{{ path('question_edit', {'id': question.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="8">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

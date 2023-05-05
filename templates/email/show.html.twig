@@ -1,0 +1,24 @@
+<table class="table">
+    <tbody>
+    <tr>
+        <th> <i class="fas fa-user"></i> </th>
+        <td>{{ email.emailSender }} , le <span class="text-xs font-italic">{{ email.createdAt ? email.createdAt|date('d/m/Y') : '' }}</span></td>
+    </tr>
+    <tr>
+        <th>Nom</th>
+        <td>{{ email.nom }}</td>
+    </tr>
+    <tr>
+        <th>Objet</th>
+        <td>{{ email.objet }}</td>
+    </tr>
+    <tr>
+        <th>Corps du mail</th>
+        <td>{{ email.corps }}</td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="{{ path('email_show', {'id': email.id}) }}" class="fas btn btn-xs btn-default float-right rounded" title="Répondre">
+    <i class="fas fa-reply text-info"> répondre</i>
+</a>

@@ -1,0 +1,97 @@
+{{ include('admin/includes/head.html.twig')}}
+
+<style>
+    @media screen and (max-width: 780px){
+        .im-login{
+            display: none;
+        }
+    }
+</style>
+
+<div class="">
+    <div class="row pt-2" style="border-top: 3px solid red;">
+
+        <div class="col-sm-8 card im-login">
+            <img src="{{ asset('images/alveoles.jpg') }}" alt="" class="float-right" height="100%">
+        </div>
+
+        <div class="col-12 col-sm-4">
+            <div class="">
+                <div class="login-logo">
+                    <a href="{{ path('index') }}"> <img src="{{ asset(parametre.logo ?? "") }}" alt="" style="" width="100"> </a>
+                    <p>{{ parametre.libelleStructure }}</p>
+                </div>
+                <!-- /.login-logo -->
+                <div class="card">
+                    <div class="card-body login-card-body">
+                        <div class="text-center">
+                            {% if error %}
+                                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+
+                            {% if app.user %}
+                                <div class="mb-2">
+                                    <span class="text-primary text-decoration-underline">{{ app.user.username }}</span>, vous êtes déjà connectez
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <p class="login-box-msg">connectez-vous</p>
+
+                        <form method="post">
+                            <div class="input-group mb-3">
+                                <input type="text" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" required autofocus>
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-envelope"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <input type="password" name="password" id="inputPassword" class="form-control" required>
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-lock"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="icheck-primary">
+                                        <input type="checkbox" id="remember">
+                                        <label for="remember">
+                                            Se souvenir
+                                        </label>
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-danger float-right">Connexion</button>
+                                </div>
+                                <!-- /.col -->
+                            </div>
+                        </form>
+
+                        <!-- /.social-auth-links -->
+
+                        <p class="mb-1">
+                            <a href="#">Mot de passe oublié</a>
+                            {% if app.user %}
+                                <a href="{{ path('app_logout') }}" class="float-right">Déconnexion</a>
+                            {% endif %}
+                        </p>
+                        <p class="mb-1">
+                            <a href="#" class="text-center">Nouvelle inscription</a>
+                        </p>
+                        <p class="mb-0">
+                            <a href="{{ path('index') }}" class="text-center">Aller sur le site</a>
+                        </p>
+                    </div>
+                    <!-- /.login-card-body -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

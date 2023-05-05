@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SiteWeb{% endblock %}
+
+{% block body %}
+    <h1>SiteWeb</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ site_web.id }}</td>
+            </tr>
+            <tr>
+                <th>Structure</th>
+                <td>{{ site_web.structure }}</td>
+            </tr>
+            <tr>
+                <th>Code</th>
+                <td>{{ site_web.code }}</td>
+            </tr>
+            <tr>
+                <th>Logo</th>
+                <td>{{ site_web.logo }}</td>
+            </tr>
+            <tr>
+                <th>Lien</th>
+                <td>{{ site_web.lien }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ site_web.createdAt ? site_web.createdAt|date('d/m/Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ site_web.updatedAt ? site_web.updatedAt|date('d/m/Y') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('site_web_index') }}">back to list</a>
+
+    <a href="{{ path('site_web_edit', {'id': site_web.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+
+    {{ include('site_web/_delete_form.html.twig') }}
+{% endblock %}

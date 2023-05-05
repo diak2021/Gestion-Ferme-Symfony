@@ -1,0 +1,40 @@
+{% extends 'baseNotifEmail.html.twig' %}
+{% block body %}
+    <div class="col-lg-12">
+        <h4>
+            Important, alerte automatique
+        </h4>
+        <h4 class="text-muted">
+            Bonjour admin
+        </h4>
+
+        <p>
+            Vous venez de recevoir un nouveau mail: <br> <br>
+            De : <span class="text-bold">{{ email.nom }}</span> <br>
+            Email : {{ email.emailSender }} <br> <br>
+        </p>
+
+        <p>
+            {% if email.objet %}
+                Objet : <span style="font-weight: bold">{{ email.objet }}</span> <br>
+            {% endif %}
+
+        </p>
+
+        <p>
+            Detail : <br>
+            {{ email.corps }}
+        </p>
+
+        <p>
+            Cordialement, <br>
+            {{ parametre.libelleStructure }}, <br>
+            Centre émetteur, Conakry, Guinée
+        </p>
+        <small>
+            <i>
+                Ce courriel est un message automatique.
+            </i>
+        </small>
+    </div>
+{% endblock %}

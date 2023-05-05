@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Email {% endblock %}
+
+{% block card_title %}
+
+    {% if new_mails is defined %}
+        <i class="fas fa-envelope text-sm"></i> Nouveaux mails
+    {% else %}
+        <i class="fas fa-envelope-open-text text-sm"></i> Mails reçus
+    {% endif %}
+
+{% endblock %}
+
+{% block card_tools %}
+    {#    <a href="#" class="btn btn-default btn-xs rounded" data-toggle="modal" data-target="#modalAjout">#}
+    {#        <i class="fas fa-plus-circle"></i> Ajouter#}
+    {#    </a>#}
+{% endblock %}
+{% block body %}
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>Objet</th>
+                <th>Corps</th>
+                <th>Expéditeur</th>
+                {#               <th>EmailReceiver</th>#}
+                <th>Nom</th>
+                {#               <th>IsLu</th>#}
+                {#               <th>IsMailEntrant</th>#}
+                {#               <th>IsMailSortant</th>#}
+                <th>Reçu le</th>
+                {#               <th>UpdatedAt</th>#}
+                <th class="text-center" style="width: 120px!important;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for email in emails %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>
+                        <a href="{{ path('email_show', {'id': email.id}) }}" class="show {{ email.isLu ? 'text-dark' : 'text-bold text-primary' }}" data-toggle="modal" data-target="#modal-show">
+                            {{ email.objet }}
+                        </a>
+                    </td>
+                    <td>{{ email.corps|slice(0, 200) }}</td>
+                    <td>
+                        <a href="{{ path('email_show', {'id': email.id}) }}" class="show {{ email.isLu ? 'text-dark' : 'text-bold text-primary' }}" data-toggle="modal" data-target="#modal-show">
+                            {{ email.emailSender }}
+                        </a>
+                    </td>
+                    {#                   <td>{{ email.emailReceiver }}</td>#}
+                    <td>{{ email.nom }}</td>
+                    {#                   <td>{{ email.isLu ? 'Yes' : 'No' }}</td>#}
+                    {#                   <td>{{ email.isMailEntrant ? 'Yes' : 'No' }}</td>#}
+                    {#                   <td>{{ email.isMailSortant ? 'Yes' : 'No' }}</td>#}
+                    <td>{{ email.createdAt ? email.createdAt|date('d/m/Y') : '' }}</td>
+                    {#                   <td>{{ email.updatedAt ? email.updatedAt|date('d/m/Y') : '' }}</td>#}
+                    <td class="text-center">
+                        {% if email.corps %}
+                            <a href="{{ path('email_show', {'id': email.id}) }}" data-toggle="modal" data-target="#modal-show" class="fas btn btn-xs btn-default rounded show" title="Lire">
+                                <i class="fas fa-eye text-primary"></i>
+                            </a>
+                        {% endif %}
+                        <a href="{{ path('email_reply', {'id': email.id}) }}" class="fas btn btn-xs btn-default rounded" title="Répondre">
+                            <i class="fas fa-share text-info"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="12">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    {#   FENETRES MODALES#}
+    <div class="modal fade" id="modalAjout">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ path('email_index') }}" method="post">
+                    <div class="modal-header bg-success">
+                        <h4 class="modal-title card-title"> <i class="fas fa-plus-circle"></i> Nouvel enregistrement</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-default">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modal-show">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title card-title text-dark"> <i class="fas fa-th-list "></i> Détails du mail</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}

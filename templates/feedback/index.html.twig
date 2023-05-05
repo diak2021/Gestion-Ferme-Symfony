@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Feedback {% endblock %}
+
+{% block card_title %}<i class="fas fa-list text-sm"></i> Retours clients {% endblock %}
+{% block card_tools %}
+{% endblock %}
+{% block body %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>Temoignage</th>
+                <th>Date</th>
+                <th class="text-center" style="width: 120px!important;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for feedback in feedback %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ feedback.temoignage }}</td>
+                    <td>{{ feedback.createdAt ? feedback.createdAt|date('d/m/Y') : '' }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('feedback_show', {'id': feedback.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-eye text-primary"></i></a>
+                        <a href="{{ path('feedback_edit', {'id': feedback.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

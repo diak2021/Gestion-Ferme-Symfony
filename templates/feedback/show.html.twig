@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block body %}
+    <h1>Feedback</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ feedback.id }}</td>
+            </tr>
+            <tr>
+                <th>Temoignage</th>
+                <td>{{ feedback.temoignage }}</td>
+            </tr>
+            <tr>
+                <th>IsActif</th>
+                <td>{{ feedback.isActif ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ feedback.createdAt ? feedback.createdAt|date('d/m/Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ feedback.updatedAt ? feedback.updatedAt|date('d/m/Y') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('feedback_index') }}">back to list</a>
+
+    <a href="{{ path('feedback_edit', {'id': feedback.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+
+    {{ include('feedback/_delete_form.html.twig') }}
+{% endblock %}

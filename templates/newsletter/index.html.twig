@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Newsletter {% endblock %}
+
+{% block card_title %}<i class="fas fa-list text-sm"></i> Liste des abonnés à la newsletter {% endblock %}
+{% block card_tools %}
+{#    <a href="#" class="btn btn-default btn-xs rounded" data-toggle="modal" data-target="#modalAjout">#}
+{#        <i class="fas fa-plus-circle"></i> Ajouter#}
+{#    </a>#}
+{% endblock %}
+{% block body %}
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>Email</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Crée le</th>
+                <th class="text-center" style="width: 120px!important;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for newsletter in newsletters %}
+                <tr>
+                    <td>{{ newsletter.id }}</td>
+                    <td>{{ newsletter.email }}</td>
+                    <td>{{ newsletter.nom }}</td>
+                    <td>{{ newsletter.prenom }}</td>
+                    <td>{{ newsletter.createdAt ? newsletter.createdAt|date('d/m/Y') : '' }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('newsletter_show', {'id': newsletter.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-eye text-primary"></i></a>
+                        <a href="{{ path('newsletter_edit', {'id': newsletter.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7" class="text-center">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{#   FENETRES MODALES#}
+    <div class="modal fade" id="modalAjout">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ path('newsletter_index') }}" method="post">
+                    <div class="modal-header bg-success">
+                        <h4 class="modal-title card-title"> <i class="fas fa-plus-circle"></i> Nouvel enregistrement</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-sm btn-default">
+                            <i class="fas fa-save"></i> Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+     <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title card-title text-dark"> <i class="fas fa-edit "></i> Mise à jour</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}

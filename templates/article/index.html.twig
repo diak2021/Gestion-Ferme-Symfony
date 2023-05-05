@@ -1,0 +1,228 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article {% endblock %}
+{% block card_title %}<i class="fas fa-list text-sm"></i> Liste des articles {% endblock %}
+{% block card_tools %}
+    <a href="#" class="btn btn-default btn-xs rounded" data-toggle="modal" data-target="#modalAjout">
+        <i class="fas fa-plus-circle"></i> Ajouter
+    </a>
+{% endblock %}
+{% block body %}
+    <style>
+        .lire-suite:hover, .voir-moins:hover{
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>Titre</th>
+                <th>Photo</th>
+                <th>Date Exp.</th>
+                <th>Statut</th>
+                <th class="text-center" style="width: 120px!important;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td rowspan="2" class="text-center">
+                        {{ loop.index }} {% if article.isPrincipal %} <span class="fas fa-star text-warning text-xs ml-2"></span> {% endif %}
+                    </td>
+                    <td>{{ article.titre|slice(0, 100) }}</td>
+                    <td><img src="{{ asset(article.photo ?? "") }}" height="50" alt=""></td>
+                    <td>{{ article.dateExpiration ? article.dateExpiration|date('d/m/Y') : '' }}</td>
+                    <td>
+                        <form action="{{ path('article_switch_status') }}" method="post" class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                            <input type="hidden" name="articleId" value="{{ article.id }}">
+                            <input type="checkbox" class="custom-control-input input-lg" id="article{{ article.id }}" {{ article.isActif ? 'checked' : ''}}>
+                            <label class="custom-control-label on-off" for="article{{ article.id }}">{{ article.isActif ? 'ON' : 'OFF'}}</label>
+                        </form>
+                    </td>
+                    <td class="text-center" style="width: 120px">
+                        {#                    <a href="{{ path('article_show', {'id': article.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition">#}
+                        {#                        <i class="fas fa-eye text-primary"></i>#}
+                        {#                    </a>#}
+                        <a href="{{ path('article_edit', {'id': article.id}) }}" class="fas btn btn-xs btn-default rounded edition" data-toggle="modal" data-target="#modal-edit">
+                            <i class="fas fa-edit text-warning"></i>
+                        </a>
+                        <div style="display: inline-block">
+                            {{ include('article/_delete_form.html.twig') }}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6" class="detail-intro">
+                        {{ article.detail|slice(0, 200) }} <span class="text-primary text-decoration-underline lire-suite ml-1">suite...</span>
+                    </td>
+                    <td colspan="6" style="display: none" class="detail-full">
+                        {{ article.detail }} <span class="text-primary text-decoration-underline voir-moins ml-1">voir moins...</span>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="9">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{#   FENETRES MODALES#}
+    <div class="modal fade" id="modalAjout">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+{#                <form action="{{ path('article_index') }}" method="post">#}
+                    <div class="modal-header bg-success">
+                        <h4 class="modal-title card-title"> <i class="fas fa-plus-circle"></i> Nouvel enregistrement</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_start(form) }}
+                            <div class="row">
+                                <div class="col-sm-6">{{ form_row(form.titre) }}</div>
+                                <div class="col-sm-6">{{ form_row(form.textAppercu) }}</div>
+                                <div class="col-sm-6">{{ form_row(form.dateExpiration) }}</div>
+                                <div class="col-sm-6">{{ form_row(form.photo) }}</div>
+                                <div class="col-sm-6">{{ form_row(form.textIntroductif) }}</div>
+                                <div class="col-sm-6">{{ form_row(form.detail) }}</div>
+                                <div class="col-sm-6">{{ form_row(form.isPrincipal) }}</div>
+                            </div>
+                            <button type="submit" class="btn btn-sm btn-default float-right">
+                                <i class="fas fa-save"></i> Enregistrer
+                            </button>
+                        {{ form_end(form) }}
+                    </div>
+{#                </form>#}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+    <div class="modal fade" id="modal-edit">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <h4 class="modal-title card-title"> <i class="fas fa-edit"></i> Mise à jour</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+
+{% endblock %}
+
+{% block other_scripts %}
+    <script>
+
+        document.querySelectorAll("input[type='checkbox'].custom-control-input").forEach(function (buttom) {
+            buttom.addEventListener('click', submitFormSwitch);
+        })
+
+        function submitFormSwitch() {
+
+            let form = $(this).parent('form');
+            let label = $('label.on-off', form);
+
+            // actualisation du statut
+
+            if ($(this).prop('checked') === true){
+                label.html('ON');
+            }
+            else {
+                label.html('OFF');
+            }
+
+            // envoi du formulaire du bouton
+
+            let action = form.attr('action');
+            let formData = form.serialize()
+
+            $.ajax({
+                url : action,
+                type: "POST",
+                data : formData,
+                success: function(response, textStatus, jqXHR)
+                {
+                    if (response.message === "Option activée avec succès!"){
+                        $(document).Toasts('create', {
+                            class: 'bg-success',
+                            title: "Information",
+                            autohide: true,
+                            delay: 2000,
+                            subtitle: '',
+                            icon: "fas fa-th-list",
+                            position: 'topRight',
+                            body: response.message,
+                        })
+                    }else {
+                        $(document).Toasts('create', {
+                            class: 'bg-warning',
+                            title: "Information",
+                            autohide: true,
+                            delay: 2000,
+                            subtitle: '',
+                            icon: "fas fa-th-list",
+                            position: 'topRight',
+                            body: response.message,
+                        })
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    $(document).Toasts('create', {
+                        class: 'bg-danger',
+                        title: "Information",
+                        autohide: true,
+                        delay: 5000,
+                        subtitle: '',
+                        icon: "fas fa-th-list",
+                        position: 'topRight',
+                        body: errorThrown,
+                    })
+                }
+            });
+        }
+
+        document.querySelectorAll(".lire-suite").forEach(function (buttom) {
+            buttom.addEventListener('click', showDetailArticle);
+        })
+
+        function showDetailArticle() {
+            $('.detail-full').hide();
+            $('.detail-intro').show();
+
+            let tr_intro = $(this).parent('.detail-intro');
+            let tr_full = tr_intro.next().show();
+
+            tr_intro.hide();
+            tr_full.show();
+        }
+
+        document.querySelectorAll(".voir-moins").forEach(function (buttom) {
+            buttom.addEventListener('click', showIntroArticle);
+        })
+
+        function showIntroArticle() {
+            let tr_full = $(this).parent('.detail-full');
+            let tr_intro = tr_full.prev().show();
+
+            tr_full.hide();
+            tr_intro.show();
+        }
+    </script>
+
+{% endblock %}

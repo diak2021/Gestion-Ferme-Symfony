@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}RendezVous {% endblock %}
+
+{% block card_title %}
+    {% if new_rdv is defined %}
+        <i class="fas fa-list text-sm"></i> Nouveaux rendez-vous
+    {% else %}
+        <i class="fas fa-list text-sm"></i> Rendez-vous pris avec nos médecins
+    {% endif %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="table-responsive">
+        <table class="table table-striped" id="example1">
+            <thead>
+            <tr>
+                <th>N°</th>
+                <th>Nom & Prénom</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>Date et Heure</th>
+                <th>Statut</th>
+                <th>S'est tenu</th>
+                <th class="text-center" style="width: 120px!important;">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for rendez_vou in rendez_vouses %}
+                <tr>
+                    <td>{{ loop.index }}
+                        {% if not rendez_vou.isRepondu %}
+                            <span class="fas fa-forward text-warning"></span>
+                        {% endif %}
+                    </td>
+                    <td>{{ rendez_vou.nom ~ ' ' ~ rendez_vou.prenom }}</td>
+                    <td class="{{ rendez_vou.isLu ? '' : 'text-bold text-primary' }}">{{ rendez_vou.email }}</td>
+                    <td>{{ rendez_vou.telephone }}</td>
+                    <td>
+                        {{ rendez_vou.dateRendezVous ? rendez_vou.dateRendezVous|date('l d F') : '' }}
+                        {{ rendez_vou.heureRendezVous ? rendez_vou.heureRendezVous|date(' à H:i') : '' }}
+                    </td>
+                    <td>
+                        {% if rendez_vou.isConfirmer %}
+                            <span class="badge badge-success">Confirmé</span>
+                        {% elseif rendez_vou.isReamenager %}
+                            <span class="badge badge-warning">Réaménagé</span>
+                        {% elseif rendez_vou.isAnnuler %}
+                            <span class="badge badge-danger">Annulé</span>
+                        {% else %}
+                            <span class="badge badge-info">En attente</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ rendez_vou.hasTakenPlace ? 'Oui' : 'Non' }}</td>
+                    <td class="text-center">
+                        <a href="{{ path('rendez_vous_show', {'id': rendez_vou.id}) }}" data-toggle="modal" data-target="#modal-show" class="fas btn btn-xs btn-default rounded show" title="Lire">
+                            <i class="fas fa-eye text-primary"></i>
+                        </a>
+                        <a href="{{ path('rdv_reply', {'id': rendez_vou.id}) }}" class="fas btn btn-xs btn-default rounded" title="Répondre">
+                            <i class="fas fa-reply text-info"></i>
+                        </a>
+                        <div style="display: inline-block">
+                            {{ include('rendez_vous/_delete_form.html.twig') }}
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="17">Aucun enregistrement trouvé</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+     <div class="modal fade" id="modal-show">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h4 class="modal-title card-title text-dark"> <i class="fas fa-edit "></i> Détails du rendez-vous</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn btn-sm btn-default"><i class="fas fa-check-double"></i> Confirmer</a>
+                    <a href="#" class="btn btn-sm btn-default"><i class="fas fa-pen"></i> Réamenager</a>
+                    <a href="#" class="btn btn-sm btn-default"><i class="fas fa-times"></i> Annuler</a>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+{% endblock %}

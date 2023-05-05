@@ -1,0 +1,5 @@
+<form method="post" action="{{ path('image_gallerie_delete', {'id': image_gallerie.id}) }}" onsubmit="return confirm('Etes-vous sûr de vouloir supprimer cet enregistrement ?');">
+    <input type="hidden" name="_method" value="DELETE">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ image_gallerie.id) }}">
+    <button class="btn btn-xs btn-default rounded"><i class="fas fa-trash text-danger"></i></button>
+</form>

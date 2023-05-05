@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Newsletter{% endblock %}
+
+{% block body %}
+    <h1>Newsletter</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ newsletter.id }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ newsletter.email }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ newsletter.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ newsletter.prenom }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ newsletter.createdAt ? newsletter.createdAt|date('d/m/Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ newsletter.updatedAt ? newsletter.updatedAt|date('d/m/Y') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('newsletter_index') }}">back to list</a>
+
+    <a href="{{ path('newsletter_edit', {'id': newsletter.id}) }}" data-toggle="modal" data-target="#modal-edit" class="fas btn btn-xs btn-default rounded edition"><i class="fas fa-edit text-warning"></i></a>
+
+    {{ include('newsletter/_delete_form.html.twig') }}
+{% endblock %}

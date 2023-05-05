@@ -1,0 +1,11 @@
+<form action="{{ path('production_edit', { 'id': production.id }) }}" method="post">
+    {{ form_start(form) }}
+    {{ form_row(form.date) }}
+    {{ form_row(form.prixUnitaire, { 'attr' : { 'class' : '', 'value' : production.prixUnitaire } }) }}
+    {{ form_row(form.quantite) }}
+    {{ form_row(form.observation) }}
+    <button class="btn btn-xs btn-outline-success float-right">
+        <i class="fas fa-save"></i> Enregistrer
+    </button>
+    {{ form_end(form) }}
+</form>

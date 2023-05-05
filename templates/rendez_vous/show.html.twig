@@ -1,0 +1,28 @@
+<table class="table">
+    <tbody>
+    <tr>
+        <th>Demandeur</th>
+        <td>{{ rendez_vou.nom }}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{ rendez_vou.email }}</td>
+    </tr>
+    <tr>
+        <th>Téléphone</th>
+        <td>{{ rendez_vou.telephone }}</td>
+    </tr>
+    <tr>
+        <th>Date du Rendez-Vous</th>
+        <td>{{ rendez_vou.dateRendezVous ? rendez_vou.dateRendezVous|date('d/m/Y') : '' }}</td>
+    </tr>
+    <tr>
+        <th>Heure du Rendez-Vous</th>
+        <td>{{ rendez_vou.heureRendezVous ? rendez_vou.heureRendezVous|date('H:i:s') : '' }}</td>
+    </tr>
+    <tr>
+        <th>Détail du message</th>
+        <td>{{ rendez_vou.detail }}</td>
+    </tr>
+    </tbody>
+</table>

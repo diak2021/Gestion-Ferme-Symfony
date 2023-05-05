@@ -1,0 +1,8 @@
+<form action="{{ path('categorie_edit', {'id': categorie.id}) }}" method="post">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-sm btn-default float-right">
+        <i class="fas fa-save"></i> Appliquer
+    </button>
+    {{ form_end(form) }}
+</form>
